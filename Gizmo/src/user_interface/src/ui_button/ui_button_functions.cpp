@@ -1,100 +1,120 @@
 #include "Arduino.h"
 #include "ui_button_class.h"
 
-// Local Variables
-int ledPin      = 13;
-int uiButtonPin = 28;
-bool interruptsEnabled          = false;  // TO DO: Move to top-level interrupt setup
-
-int previousState = 1;       // Used to determine button transitions
-unsigned int previousPress;     // Used to time button press durations
-volatile int buttonFlag;
-int buttonDebounce  = 20;       // Used to debounce button input (20ms)
-int selectTimer     = 500;      // Used to identify Select vs Next (500ms)
-
-int userSelect  = 0;                // User Pressed Select
-int next    = 0;                // User Pressed Next
-
-// Global Functions
-// Class Functions
-int ui_button_class::checkSelect()
-{
-    int temp = userSelect;
-    if (userSelect) {
-      next = 0;
-      userSelect = 0;
-    }
-    return temp;
-}
-
-int ui_button_class::checkNext()
-{
-    int temp = next;
-    if (next) {
-      next = 0;
-      userSelect = 0;
-    }
-    return temp;
-}
-
-void buttonEvent()
-{
-  ui_button_class ui_btn;
-
-  // Button Pushed
-  if (digitalRead(uiButtonPin) == LOW && previousState == HIGH)
-  {
-    previousPress = millis();
-    previousState = LOW;
-  }
-
-  // Button Released
-  else if (digitalRead(uiButtonPin) == HIGH && previousState == LOW)
-  {
-
-    // Select
-    if ((millis() - previousPress) > selectTimer)
-    {
-      //oled.main_menu();
-      userSelect = 1;
-    }
-
-    // Next
-    else
-    {
-      next = 1;
-    }
-    previousState = HIGH;
-  }
-}
-
 // Button Interrupt Service Routine
-void myISR(void)
+void buttonISR(void)
 {
-  // Button Debouncer
-  if((millis() - previousPress) > buttonDebounce)
+	ui_button_class* button = ui_button_class::getButton();
+	button->registerPress();
+}
+
+ui_button_class::ui_button_class()
+{
+	ui_button_setup();
+}
+
+static ui_button_class* ui_button_class::getButton()
+{
+  if(ui_button_class::button == NULL)
+    ui_button_class::button = new ui_button_class();
+  return ui_button_class::button;
+}
+
+void ui_button_class::registerPress()
+{
+  unsigned long currentMillis = millis();
+  if(waitingForRelease)
   {
-    buttonEvent();
+    //Serial.println("r");
+    if(clickTimes[1] == 0 && clickTimes[0] == 0 && currentMillis - clickTimes[1] > BUTTON_DEBOUNCE) //catch second click release
+    {
+      //Serial.println("second release");
+      releaseTime = currentMillis;
+      waitingForRelease = false;
+      return;
+    }
+    else if(clickTimes[1] == 0 && clickTimes[0] != 0 && (currentMillis - clickTimes[0] > BUTTON_DEBOUNCE)) //catch first click release
+    {
+      //Serial.println("first release");
+      releaseTime = currentMillis;
+      waitingForRelease = false;
+      return;
+    }
+    else
+      return;
+  }
+
+  if(currentMillis - releaseTime < BUTTON_DEBOUNCE)
+    return;
+
+  if(clickTimes[0] == 0)
+  {
+    clickTimes[0] = currentMillis;
+    waitingForRelease = true;
+    //Serial.print("clickTimes[0]=");
+    //Serial.println(clickTimes[0]);
+  }
+  else if(clickTimes[1] == 0 && clickTimes[0] != 0 && currentMillis - clickTimes[0] > BUTTON_DEBOUNCE)
+  {
+    clickTimes[1] = currentMillis;
+    waitingForRelease = true;
+    //Serial.print("clickTimes[1]=");
+    //Serial.println(clickTimes[1]);
+  }
+    setButtonStatus();
+}
+
+bool ui_button_class::checkSelect()
+{
+    bool temp = select;
+    if (select) 
+	{
+      next = false;
+      select = false;
+    }
+    return temp;
+}
+
+bool ui_button_class::checkNext()
+{
+    bool temp = next;
+    if (next) 
+	{
+      next = false;
+      select = false;
+    }
+    return temp;
+}
+
+void ui_button_class::setButtonStatus()
+{
+  interrupts();
+  while(!next && !select)
+  {
+    if((millis() - clickTimes[0]) > SELECT_DELTA)
+    {
+      //1 click => NEXT
+      Serial.println("NEXT");
+      next = true;
+      clickTimes[0] = 0;
+      clickTimes[1] = 0;
+    }
+    else if(clickTimes[1] > 0 && (clickTimes[1] - clickTimes[0]) < SELECT_DELTA)
+    {
+      //2 clicks => SELECT
+      Serial.println("SELECT");
+      select = true;
+      clickTimes[0] = 0;
+      clickTimes[1] = 0;
+    }
   }
 }
 
-// Class Functions
 void ui_button_class::ui_button_setup()
 {
-    pinMode(uiButtonPin, INPUT_PULLUP);
-    pinMode(ledPin, OUTPUT);
-    
-    // Set Initial LED State
-    digitalWrite(ledPin, OUTPUT);
-
-    attachInterrupt(digitalPinToInterrupt(uiButtonPin), myISR, RISING);
-    //attachInterrupt(digitalPinToInterrupt(uiButtonPin), myISR, FALLING);
-    //  attachInterrupt(digitalPinToInterrupt(uiButtonPin), myISR, LOW);
-    //  attachInterrupt(digitalPinToInterrupt(uiButtonPin), myISR, HIGH);
-    //  attachInterrupt(digitalPinToInterrupt(uiButtonPin), myISR, CHANGE);
-
-    //  // attaching a different interrupt to the same pin overwrites the existing ISR
-    //  attachInterruptArg(digitalPinToInterrupt(uiButtonPinN), myISRArg, &count, RISING);
-
-    interruptsEnabled = true;
+  pinMode(BUTTON_PIN, INPUT);
+  attachInterrupt(digitalPinToInterrupt(BUTTON_PIN), buttonISR, HIGH);
+  Serial.begin(115200);
+  while(!Serial);
+  Serial.println("Serial Connected");
 }

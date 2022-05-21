@@ -2,9 +2,9 @@
 #include "user_interface_class.h"
 
 // Class Instantiations
-ui_button_class ui_button;
+ui_button_class* ui_button_class::button = NULL;
+ui_button_class* ui_button;
 oled_screen_class oled;
-
 
 // State Definitions
 enum ui_state_enum {INACTIVE,
@@ -41,12 +41,12 @@ String user_interface_class::ui_menu()
                 break;
 
             case MENU_START:
-                if(ui_button.checkSelect() == 1){
+                if(ui_button->checkSelect()){
                     ui_state = START_BACK;
                     oled.start_back();
                 }
 
-                else if(ui_button.checkNext() == 1) {
+                else if(ui_button->checkNext()) {
                     ui_state = MENU_GUIDE;
                     oled.menu_guide();
                 }
@@ -54,12 +54,12 @@ String user_interface_class::ui_menu()
 
 
             case START_BACK:
-                if(ui_button.checkSelect() == 1){
+                if(ui_button->checkSelect()){
                     ui_state = MENU_START;
                     oled.menu_start();
                 }
 
-                else if(ui_button.checkNext() == 1) {
+                else if(ui_button->checkNext()) {
                     ui_state = START_START;
                     oled.start_start();
                 }
@@ -67,12 +67,12 @@ String user_interface_class::ui_menu()
 
 
             case START_START:
-                if(ui_button.checkSelect() == 1){
+                if(ui_button->checkSelect()){
                     ui_state = INACTIVE;
                     selection = "START";
                 }
 
-                else if(ui_button.checkNext() == 1) {
+                else if(ui_button->checkNext()) {
                     ui_state = START_BACK;
                     oled.start_back();
                 }
@@ -80,24 +80,24 @@ String user_interface_class::ui_menu()
 
 
             case MENU_GUIDE:
-                if(ui_button.checkSelect() == 1){
+                if(ui_button->checkSelect()){
                     ui_state = GUIDE;
                     oled.guide();
                 }
 
-                else if(ui_button.checkNext() == 1) {
+                else if(ui_button->checkNext()) {
                     ui_state = MENU_SCORE;
                     oled.menu_score();
                 }
                 break;
 
             case GUIDE:
-                if(ui_button.checkSelect() == 1){
+                if(ui_button->checkSelect()){
                     ui_state = MENU_GUIDE;
                     oled.menu_guide();
                 }
 
-                else if(ui_button.checkNext() == 1) {
+                else if(ui_button->checkNext()) {
                     ui_state = MENU_GUIDE;
                     oled.menu_guide();
                 }
@@ -105,60 +105,60 @@ String user_interface_class::ui_menu()
 
 
             case MENU_SCORE:
-                if(ui_button.checkSelect() == 1){
+                if(ui_button->checkSelect()){
                     ui_state = SCORE_BACK;
                     oled.score_back();
                 }
 
-                else if(ui_button.checkNext() == 1) {
+                else if(ui_button->checkNext()) {
                     ui_state = MENU_CAL;
                     oled.menu_cal();
                 }
                 break;
 
             case SCORE_BACK:
-                if(ui_button.checkSelect() == 1){
+                if(ui_button->checkSelect()){
                     ui_state = MENU_SCORE;
                     oled.menu_score();
                 }
 
-                else if(ui_button.checkNext() == 1) {
+                else if(ui_button->checkNext()) {
                     ui_state = MENU_SCORE;
                     oled.menu_score();
                 }
                 break;
 
             case MENU_CAL:
-                if(ui_button.checkSelect() == 1){
+                if(ui_button->checkSelect()){
                     ui_state = CAL_BACK;
                     oled.cal_back();
                 }
 
-                else if(ui_button.checkNext() == 1) {
+                else if(ui_button->checkNext()) {
                     ui_state = MENU_START;
                     oled.menu_start();
                 }
                 break;
 
             case CAL_BACK:
-                if(ui_button.checkSelect() == 1){
+                if(ui_button->checkSelect()){
                     ui_state = MENU_CAL;
                     oled.menu_cal();
                 }
 
-                else if(ui_button.checkNext() == 1) {
+                else if(ui_button->checkNext()) {
                     ui_state = CAL_START;
                     oled.cal_start();
                 }
                 break;
 
             case CAL_START:
-                if(ui_button.checkSelect() == 1){
+                if(ui_button->checkSelect()){
                     ui_state = INACTIVE;
                     selection = "CALIBRATION";
                 }
 
-                else if(ui_button.checkNext() == 1) {
+                else if(ui_button->checkNext()) {
                     ui_state = CAL_BACK;
                     oled.cal_back();
                 }
@@ -173,7 +173,7 @@ String user_interface_class::ui_menu()
 void user_interface_class::ui_setup()
 {
     // UI Button Setup
-    ui_button.ui_button_setup();
+    ui_button = ui_button_class::getButton();
 
     // OLED Setup
     oled.oled_setup();

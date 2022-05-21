@@ -6,7 +6,7 @@ OLED Screen Code
 
 // Variables
 int ledPin = 13;                // TEMPORARY
-int buttonPin = 3;              // TO DO: Move Pin Assignment To Global Pin Assignment List
+int buttonPin = 28;              // TO DO: Move Pin Assignment To Global Pin Assignment List
 
 int ledToggle;                  // TEMPORARY
 int previousState = 1;       // Used to determine button transitions
@@ -24,9 +24,9 @@ oled_screen_class oled;
 //----------------------------------------------//
 void setup() {
   // UI Button Setup
-  //pinMode(ledPin, OUTPUT);
-  //pinMode(buttonPin, INPUT_PULLUP);
-  //attachInterrupt(digitalPinToInterrupt(2), button_ISR, CHANGE);
+  pinMode(ledPin, OUTPUT);
+  pinMode(buttonPin, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(buttonPin), button_ISR, CHANGE);
   
   // Class Declaration
   

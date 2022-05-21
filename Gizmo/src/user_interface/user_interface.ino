@@ -10,6 +10,9 @@ oled_screen_class screen;
 // Setup Function (One Time At Startup)
 //----------------------------------------------//
 void setup() {
+  Serial.begin(115200);
+  while(!Serial);
+  Serial.println("Serial Connected");
   // User Interface Setup
   ui.ui_setup();
   screen.eyes_open();

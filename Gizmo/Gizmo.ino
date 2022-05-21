@@ -12,7 +12,7 @@
 // Class Instantiations
 user_interface_class  ui;
 oled_screen_class screen;
-buzzer_class buzzer;
+//buzzer_class buzzer;
 line_following_class lineFollow;
 ultrasound_class ultrasound;
 
@@ -126,7 +126,7 @@ void loop()
           if (touchResult == 1)
           {
               screen.eyes_happy();
-              buzzer.touchTune();
+              //buzzer.touchTune();
               score++;
               // Increase the score by one
           }
@@ -141,7 +141,7 @@ void loop()
         screen.update_score(score);
         screen.update_stops(stops);
         screen.victory();
-        buzzer.victoryTune();
+        //buzzer.victoryTune();
         screen.display_final_result();
         delay(5000);  // To Do: replace with milis based wait...
         break;
