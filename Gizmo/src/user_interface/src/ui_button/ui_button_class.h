@@ -11,6 +11,11 @@
  * The class is singleton because ISRs can only access instances with a global scope.
  * The singleton implementation was based on: 
  * https://stackoverflow.com/questions/1008019/c-singleton-design-pattern/1008289#1008289
+ * 
+ * To use the class, a reference to the singleton should be created by
+ * ui_button_class& button = ui_button_class::getButton();
+ * 
+ * The status of the button can then be checked using checkNext (single click) or checkSelect (double click)
  */
 class ui_button_class {
 	private:
@@ -22,6 +27,7 @@ class ui_button_class {
 	  
 	  void registerPress();
 	  void setButtonStatus();
+    void ui_button_setup();
 
     //private constructor for singleton class
 	  ui_button_class();
@@ -36,8 +42,7 @@ class ui_button_class {
       
       bool checkSelect();
       bool checkNext();
-      void ui_button_setup();
+
 	    friend void buttonISR();
 };
-
 #endif
