@@ -4,8 +4,8 @@
 // Button Interrupt Service Routine
 void buttonISR(void)
 {
-	ui_button_class* button = ui_button_class::getButton();
-	button->registerPress();
+	ui_button_class& button = ui_button_class::getButton();
+	button.registerPress();
 }
 
 ui_button_class::ui_button_class()
@@ -13,11 +13,10 @@ ui_button_class::ui_button_class()
 	ui_button_setup();
 }
 
-static ui_button_class* ui_button_class::getButton()
+static ui_button_class& ui_button_class::getButton()
 {
-  if(ui_button_class::button == NULL)
-    ui_button_class::button = new ui_button_class();
-  return ui_button_class::button;
+  static ui_button_class button;
+  return button;
 }
 
 void ui_button_class::registerPress()
