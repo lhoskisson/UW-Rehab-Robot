@@ -60,11 +60,11 @@ namespace PINS {
 #define SD_SCK_PIN      13
 
 // OLED Screen Pins
-#define OLED_SDA_PIN    14
-#define OLED_SCL_PIN    15
+#define OLED_SDA_PIN    20
+#define OLED_SCL_PIN    21
 
 // User Interface Button Pin
-#define UI_BUTTON_PIN   28
+#define UI_BUTTON_PIN   18
 
 /* UNUSED Pins
 #define TBD 1
