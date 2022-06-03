@@ -50,7 +50,8 @@ int ultrasound_class::waitForTouch(int waitSeconds=30)
     
     while(millis() < endTime)
     {
-       if (runUltrasound() <= 10)
+	   int distance = runUltrasound();
+       if (distance <= 10 && distance != 0) //remove zero as option to prevent false triggers when ultrasonic does not work
        {
            touch=1; // Success
            break;
