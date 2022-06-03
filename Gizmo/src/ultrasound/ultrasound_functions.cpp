@@ -2,10 +2,10 @@
 #include "ultrasound_class.h"
 
 // Local Variables
-int     triggerPin  = 0;
-int     echoPin     = 21;
+int     triggerPin  = 11;
+int     echoPin     = 10;
 long    duration;
-int     distance;
+int     distance
 
 unsigned int    waitTime;   // Variable used to hold desired wait time in ms
 unsigned int    startTime;  // Variable used to hold start time (in ms) of function call
@@ -50,8 +50,7 @@ int ultrasound_class::waitForTouch(int waitSeconds=30)
     
     while(millis() < endTime)
     {
-	   int distance = runUltrasound();
-       if (distance <= 10 && distance != 0) //remove zero as option to prevent false triggers when ultrasonic does not work
+       if (runUltrasound() <= 10)
        {
            touch=1; // Success
            break;
