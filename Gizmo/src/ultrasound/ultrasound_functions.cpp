@@ -2,10 +2,10 @@
 #include "ultrasound_class.h"
 
 // Local Variables
-int     triggerPin  = 11;
-int     echoPin     = 10;
+int     triggerPin  = 12;
+int     echoPin     = 11;
 long    duration;
-int     distance
+int     distance;
 
 unsigned int    waitTime;   // Variable used to hold desired wait time in ms
 unsigned int    startTime;  // Variable used to hold start time (in ms) of function call
