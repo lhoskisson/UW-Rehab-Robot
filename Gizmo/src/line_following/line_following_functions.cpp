@@ -302,6 +302,7 @@ void line_following_class::follow_line(int duration)
   while (millis() < endTime)
   {
     lineSensors = lineSensor.read_line_binary();
+    uint8_t error = calculateError(lineSensors);
     if(error == 0x77)
     {
       leftMotorPower = (rightMotorPower < leftMotorPower) ? basePower : 0;
