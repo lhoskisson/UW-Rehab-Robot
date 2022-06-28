@@ -7,9 +7,9 @@ int     echoPin     = 11;
 long    duration;
 int     distance;
 
-unsigned int    waitTime;   // Variable used to hold desired wait time in ms
-unsigned int    startTime;  // Variable used to hold start time (in ms) of function call
-unsigned int    endTime;    // Variable used to hold end time (in ms) to end function call
+unsigned long    waitTime;   // Variable used to hold desired wait time in ms
+unsigned long    startTime;  // Variable used to hold start time (in ms) of function call
+unsigned long    endTime;    // Variable used to hold end time (in ms) to end function call
 int             touch;      // Variable used to identify succesful detection "touch"
 
 // Global Functions
@@ -50,7 +50,8 @@ int ultrasound_class::waitForTouch(int waitSeconds=30)
     
     while(millis() < endTime)
     {
-       if (runUltrasound() <= 10)
+      int8_t distance = runUltrasound();
+       if (distance <= 10 && distance >= 0)
        {
            touch=1; // Success
            break;
