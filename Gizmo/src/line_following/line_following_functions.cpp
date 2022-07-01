@@ -31,6 +31,10 @@ uint8_t rightMotorPower = 0;            // Used to keep track of motor speed las
 #define ROTATE_SPEED    100
 #define MAXSPEED        400
 
+#define UNDEFINED_ERROR 0x77
+#define UNDEFINED_MIN_POWER 10
+#define UNDEFINED_MAX_POWER 200
+
 #define SWEEP_TIME_DEFAULT 1000
 
 
@@ -52,11 +56,10 @@ void line_following_class::set_motors(int leftMotorValue, int rightMotorValue)
 
 int8_t calculateError(uint8_t val)
 {
-  const int8_t undefined = 0x77;
   switch (val)
   {
     case 0b00000000:
-      return undefined;
+      return UNDEFINED_ERROR;
     case 0b00001000:
       return 4;
     case 0b00010000:
@@ -66,7 +69,7 @@ int8_t calculateError(uint8_t val)
     case 0b00100000:
       return 0;
     case 0b00101000:
-      return undefined;
+      return UNDEFINED_ERROR;
     case 0b00110000:
       return 1;
     case 0b00111000:
@@ -76,13 +79,13 @@ int8_t calculateError(uint8_t val)
     case 0b01001000:
       return 0;
     case 0b01010000:
-      return undefined;
+      return UNDEFINED_ERROR;
     case 0b01011000:
-      return undefined;
+      return UNDEFINED_ERROR;
     case 0b01100000:
       return -1;
     case 0b01101000:
-      return undefined;
+      return UNDEFINED_ERROR;
     case 0b01110000:
       return 0;
     case 0b01111000:
@@ -90,31 +93,31 @@ int8_t calculateError(uint8_t val)
     case 0b10000000:
       return -4;
     case 0b10001000:
-      return undefined;
+      return UNDEFINED_ERROR;
     case 0b10010000:
-      return undefined;
+      return UNDEFINED_ERROR;
     case 0b10011000:
-      return undefined;
+      return UNDEFINED_ERROR;
     case 0b10100000:
-      return undefined;
+      return UNDEFINED_ERROR;
     case 0b10101000:
-      return undefined;
+      return UNDEFINED_ERROR;
     case 0b10110000:
-      return undefined;
+      return UNDEFINED_ERROR;
     case 0b10111000:
-      return undefined;
+      return UNDEFINED_ERROR;
     case 0b11000000:
       return -3;
     case 0b11001000:
-      return undefined;
+      return UNDEFINED_ERROR;
     case 0b11010000:
-      return undefined;
+      return UNDEFINED_ERROR;
     case 0b11011000:
-      return undefined;
+      return UNDEFINED_ERROR;
     case 0b11100000:
       return -1;
     case 0b11101000:
-      return undefined;
+      return UNDEFINED_ERROR;
     case 0b11110000:
       return 0;
     case 0b11111000:
@@ -132,11 +135,12 @@ void line_following_class::follow_line(int duration)
   {
     lineSensors = lineSensor.read_line_binary();
     uint8_t error = calculateError(lineSensors);
-    if(error == 0x77)
+    if(error == UNDEFINED_ERROR)
     {
-      leftMotorPower = (rightMotorPower < leftMotorPower) ? basePower : 0;
-      rightMotorPower = (leftMotorPower == 0) ? basePower : 0;
+      leftMotorPower = (rightMotorPower < leftMotorPower) ? UNDEFINED_MAX_POWER : UNDEFINED_MIN_POWER;
+      rightMotorPower = (leftMotorPower == UNDEFINED_MIN_POWER) ? UNDEFINED_MAX_POWER : UNDEFINED_MIN_POWER;
       set_motors(leftMotorPower, rightMotorPower);
+      continue;
     }
     leftMotorPower = error*weight + basePower;
     rightMotorPower = -1*error*weight + basePower;
