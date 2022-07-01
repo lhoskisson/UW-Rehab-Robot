@@ -8,7 +8,7 @@
     
     
     public:
-      byte runUltrasound();
+      int8_t runUltrasound();
       void ultrasound_setup();
       int waitForTouch(int waitSeconds);
   };

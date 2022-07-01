@@ -5,7 +5,7 @@
 int     triggerPin  = 12;
 int     echoPin     = 11;
 long    duration;
-int     distance;
+int8_t     distance;
 
 unsigned long    waitTime;   // Variable used to hold desired wait time in ms
 unsigned long    startTime;  // Variable used to hold start time (in ms) of function call
@@ -13,7 +13,7 @@ unsigned long    endTime;    // Variable used to hold end time (in ms) to end fu
 int             touch;      // Variable used to identify succesful detection "touch"
 
 // Global Functions
-byte ultrasound_class::runUltrasound()
+int8_t ultrasound_class::runUltrasound()
 {
     digitalWrite(triggerPin, LOW);
     delayMicroseconds(2);
@@ -26,7 +26,7 @@ byte ultrasound_class::runUltrasound()
     distance = duration * 0.034 / 2;
 
     // convert the time into a distance
-    return byte(distance);
+    return distance;
 }
 
 // Class Functions
@@ -47,11 +47,14 @@ int ultrasound_class::waitForTouch(int waitSeconds=30)
     touch       = 0;
 
     // wait specified time (30 sec default) or until ultrasound sensor to read <=10
-    
+    while(millis() < startTime+1000);
+      int8_t distance = runUltrasound();
+      
     while(millis() < endTime)
     {
       int8_t distance = runUltrasound();
-       if (distance <= 10 && distance >= 0)
+      Serial.println(distance);
+       if (distance <= 10 && distance > 0)
        {
            touch=1; // Success
            break;
