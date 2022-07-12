@@ -49,7 +49,7 @@ void setup()
 
   // Ultrasound Setup
   ultrasound.ultrasound_setup();
-
+  
   startup();
 }
 
@@ -86,12 +86,12 @@ void loop()
       case MENU:
         user_selection = ui.ui_menu();
         // User chose to start the game
-        if (user_selection = "START")
+        if (user_selection.compareTo("START") == 0)
         {
           current_state = GAME;
         }
         // User chose to run calibration
-        else if (user_selection = "CALIBRATION")
+        else if (user_selection.compareTo("CALIBRATION")== 0)
         {
           current_state = CALIBRATION;
         }
@@ -141,7 +141,7 @@ void loop()
         current_state = MENU; // No game code so moving back to menu...
         screen.update_score(score);
         screen.update_stops(stops);
-        screen.victory();
+        //screen.victory();
         buzzer.victoryTune();
         screen.display_final_result();
         delay(5000);  // To Do: replace with milis based wait...
