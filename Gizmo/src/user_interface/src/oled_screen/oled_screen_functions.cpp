@@ -366,30 +366,7 @@ void oled_screen_class::cal_start()
 
 void oled_screen_class::calibrate()
 {
-    display.setTextSize(2);
-    display.setTextColor(WHITE);
-
-    display.clearDisplay();
-    display.setCursor(0,0);
-    display.print("Calibrate\n.");
-    display.display();
-    wait(1000);
-
-    display.clearDisplay();
-    display.setCursor(0,0);
-    display.print("Calibrate\n..");
-    display.display();
-    wait(1000);
-
-    display.clearDisplay();
-    display.setCursor(0,0);
-    display.print("Calibrate\n...");
-    display.display();
-    wait(1000);
-
-    eyes_resting();
-    eyes_open();
-    eyes_happy();
+    draw_bitmap(0, 0, cal_bmp, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
 }
 
 
