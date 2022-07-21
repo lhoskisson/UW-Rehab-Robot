@@ -68,6 +68,30 @@
             void cal_start();
             void calibrate();
 
+            //Configuration Menu Shortcuts
+            void config_back();
+            void config_walk();
+            void config_stop();
+            void config_time();
+
+            //Configuration Walk Shortcuts
+            void walk_back();
+            void walk_3();
+            void walk_6();
+            void walk_9();
+
+            //Configuration Stop Shortcuts
+            void stop_back();
+            void stop_5();
+            void stop_10();
+            void stop_20();
+
+            //Configuration Time Shortcuts
+            void time_back();
+            void time_90();
+            void time_180();
+            void time_240();
+
             // Shortcuts
             void eyes_happy();
             void eyes_happy_2();

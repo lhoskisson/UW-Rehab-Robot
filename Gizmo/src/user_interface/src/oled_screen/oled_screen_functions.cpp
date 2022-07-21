@@ -400,6 +400,88 @@ void oled_screen_class::eyes_resting_2()
     draw_bitmap(0, 0, eyes_resting_2_bmp, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
 }
 
+
+//Config display functions
+
+void oled_screen_class::config_back()
+{
+  draw_bitmap(0, 0, config_back_bmp, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
+}
+
+void oled_screen_class::config_walk()
+{
+  draw_bitmap(0, 0, config_walk_bmp, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
+}
+
+void oled_screen_class::config_stop()
+{
+  draw_bitmap(0, 0, config_stop_bmp, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
+}
+
+void oled_screen_class::config_time()
+{
+  draw_bitmap(0, 0, config_time_bmp, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
+}
+
+void oled_screen_class::walk_back()
+{
+  draw_bitmap(0, 0, walk_back_bmp, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
+}
+
+void oled_screen_class::walk_3()
+{
+  draw_bitmap(0, 0, walk_3_bmp, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
+}
+
+void oled_screen_class::walk_6()
+{
+  draw_bitmap(0, 0, walk_6_bmp, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
+}
+
+void oled_screen_class::walk_9()
+{
+  draw_bitmap(0, 0, walk_9_bmp, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
+}
+
+void oled_screen_class::stop_back()
+{
+  draw_bitmap(0, 0, stop_back_bmp, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
+}
+
+void oled_screen_class::stop_5()
+{
+  draw_bitmap(0, 0, stop_5_bmp, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
+}
+
+void oled_screen_class::stop_10()
+{
+  draw_bitmap(0, 0, stop_10_bmp, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
+}
+
+void oled_screen_class::stop_20()
+{
+  draw_bitmap(0, 0, stop_20_bmp, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
+}
+
+void oled_screen_class::time_back()
+{
+  draw_bitmap(0, 0, time_back_bmp, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
+}
+
+void oled_screen_class::time_90()
+{
+  draw_bitmap(0, 0, time_90_bmp, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
+}
+
+void oled_screen_class::time_180()
+{
+  draw_bitmap(0, 0, time_180_bmp, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
+}
+
+void oled_screen_class::time_240()
+{
+  draw_bitmap(0, 0, time_240_bmp, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
+}
 /*/void oled_screen_class::main_menu_guide_selected()
 {
     display.clearDisplay();
