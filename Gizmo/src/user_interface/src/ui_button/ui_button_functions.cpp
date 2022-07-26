@@ -13,7 +13,7 @@ ui_button_class::ui_button_class()
 	ui_button_setup();
 }
 
-static ui_button_class& ui_button_class::getButton()
+ui_button_class& ui_button_class::getButton()
 {
   static ui_button_class button;
   return button;
@@ -28,12 +28,14 @@ void ui_button_class::registerPress()
     {
       releaseTime = currentMillis;
       waitingForRelease = false;
+      setButtonStatus();
       return;
     }
     else if(clickTimes[1] == 0 && clickTimes[0] != 0 && (currentMillis - clickTimes[0] > BUTTON_DEBOUNCE)) //catch first click release
     {
       releaseTime = currentMillis;
       waitingForRelease = false;
+      setButtonStatus();
       return;
     }
     else
@@ -53,49 +55,60 @@ void ui_button_class::registerPress()
     clickTimes[1] = currentMillis;
     waitingForRelease = true;
   }
-    setButtonStatus();
 }
 
 bool ui_button_class::checkSelect()
 {
-    bool temp = select;
-    if (select) 
-	{
-      next = false;
-      select = false;
-    }
-    return temp;
+  if(buttonQueue.isEmpty())
+    return false;
+  if(buttonQueue.getHead() == SELECT)
+  {
+    buttonQueue.dequeue();
+    return true;
+  }
+  return false;
 }
 
 bool ui_button_class::checkNext()
 {
-    bool temp = next;
-    if (next) 
-	{
-      next = false;
-      select = false;
-    }
-    return temp;
+  if(buttonQueue.isEmpty())
+    return false;
+  if(buttonQueue.getHead() == NEXT)
+  {
+    buttonQueue.dequeue();
+    return true;
+  }
+  return false;
 }
 
 void ui_button_class::setButtonStatus()
 {
   interrupts();
-  while(!next && !select)
+  int queueSize = buttonQueue.itemCount();
+  while(true)
   {
+    if(clickTimes[0] == 0 && clickTimes[1] == 0)
+      break;
+      
     if((millis() - clickTimes[0]) > SELECT_DELTA)
     {
       //1 click => NEXT
-      next = true;
+      noInterrupts();
+      buttonQueue.enqueue(NEXT);
       clickTimes[0] = 0;
       clickTimes[1] = 0;
+      interrupts();
+      break;
     }
     else if(clickTimes[1] > 0 && (clickTimes[1] - clickTimes[0]) < SELECT_DELTA)
     {
       //2 clicks => SELECT
-      select = true;
+      noInterrupts();
+      buttonQueue.enqueue(SELECT);
       clickTimes[0] = 0;
       clickTimes[1] = 0;
+      interrupts();
+      break;
     }
   }
 }

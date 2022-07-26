@@ -2,13 +2,16 @@
 #define ui_button_h
   
 #include "Arduino.h"
+#include <ArduinoQueue.h>
 #define BUTTON_PIN 18
-#define SELECT_DELTA 400
-#define BUTTON_DEBOUNCE 50
+#define NEXT 0
+#define SELECT 1
+#define SELECT_DELTA 300 //(milliseconds) Window of time after a single click for there to be a double click
+#define BUTTON_DEBOUNCE 50 //(milliseconds) Window of time after a button signal is recieved that subseqent button signals will be ignored 
 
 /*
  * Singleton class that handles the button input using interrupts. 
- * The class is singleton because ISRs can only access instances with a global scope.
+ * The class is singleton because ISRs can only access class instances with a global scope.
  * The singleton implementation was based on: 
  * https://stackoverflow.com/questions/1008019/c-singleton-design-pattern/1008289#1008289
  * 
@@ -22,8 +25,7 @@ class ui_button_class {
 	  volatile unsigned long clickTimes[2] = {0, 0};
 	  volatile unsigned long releaseTime = 0;
 	  volatile bool waitingForRelease = false;
-	  bool next = false;
-	  bool select = false;
+    ArduinoQueue<int> buttonQueue;
 	  
 	  void registerPress();
 	  void setButtonStatus();
