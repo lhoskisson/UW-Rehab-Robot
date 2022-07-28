@@ -14,8 +14,8 @@ line_sensor_class lineSensor;
 const int offsetA = -1;
 const int offsetB = 1;
 uint8_t lineSensors, lineDetectCount;   // Used to temporarily store IR (line) sensor values
-uint8_t leftMotorPower = 0;             // Used to keep track of motor speed last state
-uint8_t rightMotorPower = 0;            // Used to keep track of motor speed last state
+int16_t leftMotorPower = 0;             // Used to keep track of motor speed last state
+int16_t rightMotorPower = 0;            // Used to keep track of motor speed last state
 
 // Motor Driver Pins (As of 02/09/21)
 #define MD_AIN1_PIN     6
@@ -32,7 +32,7 @@ uint8_t rightMotorPower = 0;            // Used to keep track of motor speed las
 #define MAXSPEED        400
 
 #define UNDEFINED_ERROR 0x77
-#define UNDEFINED_MIN_POWER 10
+#define UNDEFINED_MIN_POWER -100
 #define UNDEFINED_MAX_POWER 200
 
 #define SWEEP_TIME_DEFAULT 1000
@@ -134,7 +134,7 @@ void line_following_class::follow_line(int duration)
   while (millis() < endTime)
   {
     lineSensors = lineSensor.read_line_binary();
-    uint8_t error = calculateError(lineSensors);
+    int8_t error = calculateError(lineSensors);
     if(error == UNDEFINED_ERROR)
     {
       leftMotorPower = (rightMotorPower < leftMotorPower) ? UNDEFINED_MAX_POWER : UNDEFINED_MIN_POWER;
