@@ -79,12 +79,14 @@
             void walk_3();
             void walk_6();
             void walk_9();
+            void walk_rand();
 
             //Configuration Stop Shortcuts
             void stop_back();
             void stop_5();
             void stop_10();
             void stop_20();
+            void stop_rand();
 
             //Configuration Time Shortcuts
             void time_back();

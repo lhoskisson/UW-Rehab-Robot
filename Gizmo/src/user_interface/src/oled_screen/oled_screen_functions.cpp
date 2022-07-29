@@ -443,6 +443,11 @@ void oled_screen_class::walk_9()
   draw_bitmap(0, 0, walk_9_bmp, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
 }
 
+void oled_screen_class::walk_rand()
+{
+  draw_bitmap(0, 0, walk_rand_bmp, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
+}
+
 void oled_screen_class::stop_back()
 {
   draw_bitmap(0, 0, stop_back_bmp, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
@@ -461,6 +466,11 @@ void oled_screen_class::stop_10()
 void oled_screen_class::stop_20()
 {
   draw_bitmap(0, 0, stop_20_bmp, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
+}
+
+void oled_screen_class::stop_rand()
+{
+  draw_bitmap(0, 0, stop_rand_bmp, SCREEN_WIDTH, SCREEN_HEIGHT, WHITE);
 }
 
 void oled_screen_class::time_back()
