@@ -218,8 +218,9 @@ String user_interface_class::ui_menu()
 
                 case WALK_3:
                 if(ui_button.checkSelect()) {
-                    ui_state = INACTIVE;//set as inactive return to MENU state
-                    selection = "NULL";
+                    ui_state = CON_WALK;//set as inactive return to MENU state
+                    walkTime = 3;
+                    oled.config_walk();
                 }
 
                 else if(ui_button.checkNext()) {
@@ -230,8 +231,9 @@ String user_interface_class::ui_menu()
 
                 case WALK_6:
                 if(ui_button.checkSelect()) {
-                    ui_state = INACTIVE;
-                    selection = "NULL";
+                    ui_state = CON_WALK;
+                    walkTime = 6;
+                    oled.config_walk();
                 }
 
                 else if(ui_button.checkNext()) {
@@ -242,8 +244,9 @@ String user_interface_class::ui_menu()
 
                 case WALK_9:
                 if(ui_button.checkSelect()) {
-                    ui_state = INACTIVE;
-                    selection = "NULL";
+                    ui_state = CON_WALK;
+                    walkTime = 9;
+                    oled.config_walk();
                 }
 
                 else if(ui_button.checkNext()) {
@@ -278,8 +281,9 @@ String user_interface_class::ui_menu()
 
                 case STOP_5:
                 if(ui_button.checkSelect()) {
-                    ui_state = INACTIVE;
-                    selection = "NULL";
+                    ui_state = CON_STOP;
+                    waitTime = 5;
+                    oled.config_stop();
                 }
 
                 else if(ui_button.checkNext()) {
@@ -290,8 +294,9 @@ String user_interface_class::ui_menu()
 
                 case STOP_10:
                 if(ui_button.checkSelect()) {
-                    ui_state = INACTIVE;
-                    selection = "NULL";
+                    ui_state = CON_STOP;
+                    waitTime = 10;
+                    oled.config_stop();
                 }
 
                 else if(ui_button.checkNext()) {
@@ -302,8 +307,9 @@ String user_interface_class::ui_menu()
 
                 case STOP_20:
                 if(ui_button.checkSelect()) {
-                    ui_state = INACTIVE;
-                    selection = "NULL";
+                    ui_state = CON_STOP;
+                    waitTime = 20;
+                    oled.config_stop();
                 }
 
                 else if(ui_button.checkNext()) {
@@ -338,8 +344,9 @@ String user_interface_class::ui_menu()
 
                 case TIME_90:
                 if(ui_button.checkSelect()) {
-                    ui_state = INACTIVE;
-                    selection = "NULL";
+                    ui_state = CON_TIME;
+                    sessionTime = 90;
+                    oled.config_time();
                 }
 
                 else if(ui_button.checkNext()) {
@@ -350,8 +357,9 @@ String user_interface_class::ui_menu()
 
                 case TIME_180:
                 if(ui_button.checkSelect()) {
-                    ui_state = INACTIVE;
-                    selection = "NULL";
+                    ui_state = CON_TIME;
+                    sessionTime = 180;
+                    oled.config_time();
                 }
 
                 else if(ui_button.checkNext()) {
@@ -362,8 +370,9 @@ String user_interface_class::ui_menu()
 
                 case TIME_240:
                 if(ui_button.checkSelect()) {
-                    ui_state = INACTIVE;
-                    selection = "NULL";
+                    ui_state = CON_TIME;
+                    sessionTime = 240;
+                    oled.config_time();
                 }
 
                 else if(ui_button.checkNext()) {

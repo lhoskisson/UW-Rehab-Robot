@@ -13,6 +13,11 @@
     public:
         void ui_setup();
         String ui_menu();
+
+    private:
+        int walkTime = 0;
+        int waitTime = 0;
+        int sessionTime = 180;
   };
 
 #endif
