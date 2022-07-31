@@ -39,6 +39,7 @@ unsigned long gameStartTime;
 unsigned long gameEndTime;
 int touchResult = 0;
 
+
 //----------------------------------------------//
 // Setup Function (One Time At Startup)
 //----------------------------------------------//
@@ -106,7 +107,7 @@ void loop()
       case GAME:
         screen.countdown();
         // local variables
-        sessionTime     = sessionMinutes*60*1000; // Convert to seconds, then miliseconds
+        sessionTime     = ui.getTime();//TEST   //sessionMinutes*60*1000; // Convert to seconds, then miliseconds
         gameStartTime   = millis();
         gameEndTime     = sessionTime + gameStartTime;
         touchResult     = 0;
@@ -118,12 +119,12 @@ void loop()
         while(millis() < gameEndTime)
         {
           // Start line following
-          lineFollow.follow_line(10000); // units in ms
+          lineFollow.follow_line(ui.getWalk()*1000);//TEST  // units in ms
           
           // Wait For Touch
           touchResult = 0;
           screen.print_text((char*)"Waiting \nFor \nTouch...", 2);
-          touchResult = ultrasound.waitForTouch(20); // units in sec
+          touchResult = ultrasound.waitForTouch(ui.getWait()); // units in sec   //TEST
           if (touchResult == 1)
           {
               screen.eyes_happy();

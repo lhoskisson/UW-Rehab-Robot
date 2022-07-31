@@ -13,6 +13,18 @@
     public:
         void ui_setup();
         String ui_menu();
+        
+       
+
+        int getWalk(){
+          return walkTime;
+        }
+        int getWait() {
+          return waitTime;
+        }
+        int getTime() {
+          return sessionTime;
+        }
 
     private:
         int walkTime = 0;
