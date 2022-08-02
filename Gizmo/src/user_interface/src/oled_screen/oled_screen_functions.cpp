@@ -343,8 +343,8 @@ void oled_screen_class::cal_back()
 
     display.print("Calibrate?");
 
-    display.drawBitmap(0, SCREEN_HEIGHT/2, back_bmp, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, WHITE);
-    display.drawBitmap(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, start_selected_bmp, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, WHITE);
+    display.drawBitmap(0, SCREEN_HEIGHT/2, back_selected_bmp, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, WHITE);
+    display.drawBitmap(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, start_bmp, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, WHITE);
 
     display.display();
 }
@@ -358,8 +358,8 @@ void oled_screen_class::cal_start()
 
     display.print("Calibrate?");
 
-    display.drawBitmap(0, SCREEN_HEIGHT/2, back_selected_bmp, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, WHITE);
-    display.drawBitmap(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, start_bmp, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, WHITE);
+    display.drawBitmap(0, SCREEN_HEIGHT/2, back_bmp, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, WHITE);
+    display.drawBitmap(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, start_selected_bmp, SCREEN_WIDTH/2, SCREEN_HEIGHT/2, WHITE);
 
     display.display();
 }
