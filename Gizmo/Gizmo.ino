@@ -61,6 +61,7 @@ void setup()
 // Startup routine, separated from setup() for code cleanliness
 void startup()
 {
+  Serial.begin(9600);
   screen.menu_start();
   delay(1000);  // To Do: Replace with milis-based wait function
 }
