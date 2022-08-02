@@ -16,15 +16,9 @@
         
        
 
-        int getWalk(){
-          return walkTime;
-        }
-        int getWait() {
-          return waitTime;
-        }
-        int getTime() {
-          return sessionTime;
-        }
+        int getWalk(); //Returns Time to Walk
+        int getWait(); //Returns Time to Wait
+        int getTime(); //Returns Total Time
 
     private:
         int walkTime = 0;
