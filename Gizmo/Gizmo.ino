@@ -127,9 +127,9 @@ void loop()
         while(millis() < gameEndTime)
         {
           // Start line following
-          if (ui.getWalk() <= 0)
+          if (ui.getWalk() <= 0) // if walkTime less than or equal to 0, set random 3-10 seconds.
           {
-              lineFollow.follow_line(random(3, 11)*1000);//TEST - random if timeWalk is 0 (default)   // units in ms
+              lineFollow.follow_line(random(3, 11)*1000);// TEST - random // units in ms
           }
           else
           {
@@ -138,14 +138,14 @@ void loop()
           // Wait For Touch
           touchResult = 0;
           screen.print_text((char*)"Waiting \nFor \nTouch...", 2);
-          //Conditional if timeWait is less than or equal to 0
-          if (ui.getWait() <= 0)
+          
+          if (ui.getWait() <= 0)// if waitTime is less than or equal to 0
           {
-          touchResult = ultrasound.waitForTouch(random(3, 11)); // units in sec 
+          touchResult = ultrasound.waitForTouch(random(3, 11)); //TEST - random // units in sec 
           }
           else
           {
-              touchResult = ultrasound.waitForTouch(ui.getWait()); // units in sec
+              touchResult = ultrasound.waitForTouch(ui.getWait()); // else run config values
           }
           if (touchResult == 1)
           {
@@ -190,12 +190,12 @@ void loop()
         while(millis() < gameEndTime)
         {
           // Start line following
-          lineFollow.follow_line(random(3, 11)*1000);//TEST randomly walk 3-10 sec  // units in ms
+          lineFollow.follow_line(random(3, 11)*1000);//TEST - random // units in ms
           
           // Wait For Touch
           touchResult = 0;
           screen.print_text((char*)"Waiting \nFor \nTouch...", 2);
-          touchResult = ultrasound.waitForTouch(ui.getWait());//TEST // units in sec
+          touchResult = ultrasound.waitForTouch(ui.getWait()); // units in sec
           if (touchResult == 1)
           {
               screen.eyes_happy();
@@ -244,7 +244,7 @@ void loop()
           // Wait For Touch
           touchResult = 0;
           screen.print_text((char*)"Waiting \nFor \nTouch...", 2);
-          touchResult = ultrasound.waitForTouch(random(3, 11)); //TEST randomly wait 3-10 sec // units in sec
+          touchResult = ultrasound.waitForTouch(random(3, 11)); //TEST - random // units in sec
           if (touchResult == 1)
           {
               screen.eyes_happy();
