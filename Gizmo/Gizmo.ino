@@ -24,7 +24,9 @@ using namespace PINS;
 enum gizmo_state_enum { INACTIVE,
                         MENU,
                         GAME,
-                        CALIBRATION};
+                        GAME1,
+                        GAME2
+                        };
 
 // Variables
 uint8_t current_state = MENU;
@@ -92,10 +94,15 @@ void loop()
         {
           current_state = GAME;
         }
-        // User chose to run calibration
-        else if (user_selection.compareTo("CALIBRATION")== 0)
+        // User chose to run GAME1 (random walk)
+        else if (user_selection.compareTo("RANDWALK")== 0)
         {
-          current_state = CALIBRATION;
+          current_state = GAME1;
+        }
+        // User chose to run GAME2 (random stop)
+        else if (user_selection.compareTo("RANDSTOP")== 0)
+        {
+          current_state = GAME2;
         }
         // Something went wrong
         else
@@ -120,12 +127,75 @@ void loop()
         while(millis() < gameEndTime)
         {
           // Start line following
-          lineFollow.follow_line(ui.getWalk()*1000);//TEST  // units in ms
+          if (ui.getWalk() <= 0)
+          {
+              lineFollow.follow_line(random(3, 11)*1000);//TEST - random if timeWalk is 0 (default)   // units in ms
+          }
+          else
+          {
+              lineFollow.follow_line(ui.getWalk()*1000); // else run config values
+          }
+          // Wait For Touch
+          touchResult = 0;
+          screen.print_text((char*)"Waiting \nFor \nTouch...", 2);
+          //Conditional if timeWait is less than or equal to 0
+          if (ui.getWait() <= 0)
+          {
+          touchResult = ultrasound.waitForTouch(random(3, 11)); // units in sec 
+          }
+          else
+          {
+              touchResult = ultrasound.waitForTouch(ui.getWait()); // units in sec
+          }
+          if (touchResult == 1)
+          {
+              screen.eyes_happy();
+              buzzer.touchTune();
+              score++;
+              // Increase the score by one
+          }
+          else
+          {
+              screen.eyes_resting();
+          }
+          stops++;
+
+        }
+        current_state = MENU; // No game code so moving back to menu...
+        screen.update_score(score);
+        screen.update_stops(stops);
+        //screen.victory();
+        buzzer.victoryTune();
+        screen.display_final_result();
+        delay(5000);  // To Do: replace with milis based wait...
+        break;
+        
+//--------------------------------------------------------------//
+//        GAME 1: Random Walk Time
+//--------------------------------------------------------------//
+
+// Run through the game 1
+      case GAME1:
+        screen.countdown();
+        // local variables
+        sessionTime     = (unsigned long)ui.getTime()*1000; //sessionMinutes*60*1000; // Convert to seconds, then miliseconds
+        gameStartTime   = millis();
+        gameEndTime     = sessionTime + gameStartTime;
+        touchResult     = 0;
+        stops           = 0;
+        score           = 0;
+    
+
+        // wait specified time (30 sec default) or until ultrasound sensor to read <=10
+        while(millis() < gameEndTime)
+        {
+          // Start line following
+          lineFollow.follow_line(random(3, 11)*1000);//TEST randomly walk 3-10 sec  // units in ms
           
           // Wait For Touch
           touchResult = 0;
           screen.print_text((char*)"Waiting \nFor \nTouch...", 2);
-          touchResult = ultrasound.waitForTouch(ui.getWait()); // units in sec   //TEST
+          touchResult = ultrasound.waitForTouch(ui.getWait());//TEST // units in sec
           if (touchResult == 1)
           {
               screen.eyes_happy();
@@ -149,14 +219,54 @@ void loop()
         delay(5000);  // To Do: replace with milis based wait...
         break;
 
-      // Run through the calibration
-      case CALIBRATION:
-        // ADD CALIBRATION CODE HERE //
-        screen.calibrate();       // To Do: Remove once real calibration routine is ready
-        screen.eyes_resting_2();  // To Do: Remove once real calibration routine is ready
-        screen.eyes_happy_2();    // To Do: Remove once real calibration routine is ready
-        screen.eyes_open_2();     // To Do: Remove once real calibration routine is ready
-        current_state = MENU;     // No calibration code so moving back to menu...
+//--------------------------------------------------------------//
+//        GAME 2: Random Stop Time
+//--------------------------------------------------------------//
+
+// Run through the game 2
+      case GAME2:
+        screen.countdown();
+        // local variables
+        sessionTime     = (unsigned long)ui.getTime()*1000; //sessionMinutes*60*1000; // Convert to seconds, then miliseconds
+        gameStartTime   = millis();
+        gameEndTime     = sessionTime + gameStartTime;
+        touchResult     = 0;
+        stops           = 0;
+        score           = 0;
+    
+
+        // wait specified time (30 sec default) or until ultrasound sensor to read <=10
+        while(millis() < gameEndTime)
+        {
+          // Start line following
+          lineFollow.follow_line(ui.getWalk()*1000); // units in ms
+          
+          // Wait For Touch
+          touchResult = 0;
+          screen.print_text((char*)"Waiting \nFor \nTouch...", 2);
+          touchResult = ultrasound.waitForTouch(random(3, 11)); //TEST randomly wait 3-10 sec // units in sec
+          if (touchResult == 1)
+          {
+              screen.eyes_happy();
+              buzzer.touchTune();
+              score++;
+              // Increase the score by one
+          }
+          else
+          {
+              screen.eyes_resting();
+          }
+          stops++;
+
+        }
+        current_state = MENU; // No game code so moving back to menu...
+        screen.update_score(score);
+        screen.update_stops(stops);
+        //screen.victory();
+        buzzer.victoryTune();
+        screen.display_final_result();
+        delay(5000);  // To Do: replace with milis based wait...
         break;
     }
+
 }

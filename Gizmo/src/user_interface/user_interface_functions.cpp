@@ -268,9 +268,9 @@ String user_interface_class::ui_menu()
         break;
 
       case WALK_RAND:
-        if (ui_button.checkSelect()) { //Return to menu for now
+        if (ui_button.checkSelect()) { //Set inactive state, "RANDWALK" leads to case "GAME1"
           ui_state = INACTIVE;
-          selection = "NULL";
+          selection = "RANDWALK";
         }
 
         else if (ui_button.checkNext()) {
@@ -344,9 +344,9 @@ String user_interface_class::ui_menu()
         break;
 
       case STOP_RAND:
-        if (ui_button.checkSelect()) { //Return to menu for now
+        if (ui_button.checkSelect()) { //Set inactive state, "RANDSTOP" leads to case "GAME2"
           ui_state = INACTIVE;
-          selection = "NULL";
+          selection = "RANDSTOP";
         }
 
         else if (ui_button.checkNext()) {
