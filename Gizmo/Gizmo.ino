@@ -108,7 +108,7 @@ void loop()
       case GAME:
         screen.countdown();
         // local variables
-        sessionTime     = ui.getTime()*1000;//TEST   //sessionMinutes*60*1000; // Convert to seconds, then miliseconds
+        sessionTime     = (unsigned long)ui.getTime()*1000;//TEST   //sessionMinutes*60*1000; // Convert to seconds, then miliseconds
         gameStartTime   = millis();
         gameEndTime     = sessionTime + gameStartTime;
         touchResult     = 0;
