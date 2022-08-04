@@ -39,12 +39,29 @@ enum ui_state_enum {INACTIVE,
 
 // Variables
 uint8_t ui_state = INACTIVE;
+
 int user_interface_class::getWalk() {
+  if(walkTime == 0)
+  {
+    return random(3, 11);
+  }
+  else
+  {
   return walkTime;
+  }
 }
+
 int user_interface_class::getWait() {
+  if(waitTime == 0)
+  {
+    return random(3, 11);
+  }
+  else
+  {
   return waitTime;
+  }
 }
+
 int user_interface_class::getTime() {
   return sessionTime;
 }
@@ -268,9 +285,10 @@ String user_interface_class::ui_menu()
         break;
 
       case WALK_RAND:
-        if (ui_button.checkSelect()) { //Set inactive state, "RANDWALK" leads to case "GAME1"
-          ui_state = INACTIVE;
-          selection = "RANDWALK";
+        if (ui_button.checkSelect()) { //Set walkTime to random in getter method
+          ui_state = CON_WALK;
+          walkTime = 0;
+          oled.config_walk();
         }
 
         else if (ui_button.checkNext()) {
@@ -344,9 +362,10 @@ String user_interface_class::ui_menu()
         break;
 
       case STOP_RAND:
-        if (ui_button.checkSelect()) { //Set inactive state, "RANDSTOP" leads to case "GAME2"
-          ui_state = INACTIVE;
-          selection = "RANDSTOP";
+        if (ui_button.checkSelect()) { //Set waitTime to random in getter method
+          ui_state = CON_STOP;
+          waitTime = 0;
+          oled.config_stop();
         }
 
         else if (ui_button.checkNext()) {
