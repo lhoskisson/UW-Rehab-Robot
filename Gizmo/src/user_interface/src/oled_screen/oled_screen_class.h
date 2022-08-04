@@ -105,7 +105,7 @@
             void victory();
             void display_score();
             void display_final_result();
-            void update_score(int newScore);
+            bool update_score(int newScore);
             void update_stops(int newStops);
     };
 #endif
