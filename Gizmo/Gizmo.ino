@@ -136,9 +136,9 @@ void loop()
 
         }
         current_state = MENU; // No game code so moving back to menu...
-        Serial.print("in main gizmo ");
-        Serial.println(score);
-       while(!screen.update_score(score));
+        //Serial.print("in main gizmo ");
+        //Serial.println(score);
+       //while(!screen.update_score(score));
         
         screen.update_stops(stops);
         //screen.victory();

@@ -173,46 +173,46 @@ String user_interface_class::ui_menu()
         }
         break;
 
-      case MENU_CAL:
-        if (ui_button.checkSelect()) {
-          ui_state = CAL_BACK;
-          oled.cal_back();
-        }
-
-        else if (ui_button.checkNext()) {
-          ui_state = MENU_START;
-          oled.menu_start();
-        }
-        break;
-
-      case CAL_BACK:
-        if (ui_button.checkSelect()) {
-          ui_state = MENU_CAL;
-          oled.menu_cal();
-        }
-
-        else if (ui_button.checkNext()) {
-          ui_state = CAL_START;
-          oled.cal_start();
-        }
-        break;
-
-      case CAL_START: //select start calibration = config menu (back selected)
+      case MENU_CAL://SELECT CAL FROM MAIN MENU -> advance to config menu (back selected)
         if (ui_button.checkSelect()) {
           ui_state = CON_BACK;
           oled.config_back();
         }
 
-        else if (ui_button.checkNext()) { //next selection back in cal start menu
-          ui_state = CAL_BACK;
-          oled.cal_back();
+        else if (ui_button.checkNext()) {//MOVE TO START SELECTION
+          ui_state = MENU_START;
+          oled.menu_start();
         }
         break;
 
+//      case CAL_BACK:
+//        if (ui_button.checkSelect()) {
+//          ui_state = MENU_CAL;
+//          oled.menu_cal();
+//        }
+//
+//        else if (ui_button.checkNext()) {
+//          ui_state = CAL_START;
+//          oled.cal_start();
+//        }
+//        break;
+
+//      case CAL_START: //select start calibration = config menu (back selected)
+//        if (ui_button.checkSelect()) {
+//          ui_state = CON_BACK;
+//          oled.config_back();
+//        }
+//
+//        else if (ui_button.checkNext()) { //next selection back in cal start menu
+//          ui_state = CAL_BACK;
+//          oled.cal_back();
+//        }
+//        break;
+
       case CON_BACK: //Config Back (back is selected with walk, stop, time selections)
         if (ui_button.checkSelect()) { //goes back to previous screen
-          ui_state = CAL_START;
-          oled.cal_start();
+          ui_state = MENU_CAL;
+          oled.menu_cal();
         }
 
         else if (ui_button.checkNext()) {
@@ -247,7 +247,7 @@ String user_interface_class::ui_menu()
 
       case WALK_3:
         if (ui_button.checkSelect()) {
-          ui_state = CON_WALK;//set as inactive return to MENU state
+          ui_state = CON_WALK;
           walkTime = 3;
           oled.config_walk();
         }
