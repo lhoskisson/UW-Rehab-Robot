@@ -6,8 +6,8 @@
 #define BUTTON_PIN 18
 #define NEXT 0
 #define SELECT 1
-#define SELECT_DELTA 300 //(milliseconds) Window of time after a single click for there to be a double click
-#define BUTTON_DEBOUNCE 50 //(milliseconds) Window of time after a button signal is recieved that subseqent button signals will be ignored 
+#define SELECT_DELTA 400//300 //(milliseconds) Window of time after a single click for there to be a double click
+#define BUTTON_DEBOUNCE 20 //(milliseconds) Window of time after a button signal is recieved that subseqent button signals will be ignored 
 
 /*
  * Singleton class that handles the button input using interrupts. 

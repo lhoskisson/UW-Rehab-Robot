@@ -110,9 +110,9 @@ void ui_button_class::setButtonStatus()
     noInterrupts();
     if((millis() - clickTimes[0]) > SELECT_DELTA && clickTimes[1] == 0 && clickTimes[0] != 0 && !waitingForRelease)
     {
-      Serial.println("NEXT");
-      Serial.println(clickTimes[0]);
-      Serial.println(clickTimes[1]);
+//      Serial.println("NEXT");
+//      Serial.println(clickTimes[0]);
+//      Serial.println(clickTimes[1]);
       
       //1 click => NEXT
       //noInterrupts();
@@ -125,9 +125,9 @@ void ui_button_class::setButtonStatus()
     }
     else if(clickTimes[1] > 0 && clickTimes[0] > 0 && (clickTimes[1] - clickTimes[0]) < SELECT_DELTA && !waitingForRelease)
     {
-      Serial.println("SELECT");
-      Serial.println(clickTimes[0]);
-      Serial.println(clickTimes[1]);
+//      Serial.println("SELECT");
+//      Serial.println(clickTimes[0]);
+//      Serial.println(clickTimes[1]);
       
       //2 clicks => SELECT     
       buttonQueue.enqueue(SELECT);
